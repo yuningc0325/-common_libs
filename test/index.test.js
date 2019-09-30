@@ -1,5 +1,7 @@
-const checkType = require('./typeCheck.test')
-const commonFunc = require('./commonFunc.test')
+const commonFuncTest = require('./commonFunc.test')
+const checkTypeTest = require('./typeCheck.test')
+const dateToolTest = require('./dateTool.test')
 
-checkType()
-commonFunc()
+checkTypeTest()
+commonFuncTest()
+dateToolTest()
