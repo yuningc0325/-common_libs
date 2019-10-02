@@ -1,9 +1,14 @@
 const dateTool = require('../dateTool')
-const { isLeapYear, checkYearMonthDayFormatIsValid } = dateTool
+const {
+  isLeapYear,
+  checkYearMonthDayFormatIsValid,
+  checkDateStringIsValid
+} = dateTool
 
 module.exports = () => {
   isLeapYearTest()
   checkYearMonthDayFormatIsValidTest()
+  checkDateStringIsValidTest()
 }
 
 const isLeapYearTest = () => {
@@ -42,5 +47,38 @@ const checkYearMonthDayFormatIsValidTest = () => {
   })
   test('check if 1990 12 32 is valid', () => {
     expect(checkYearMonthDayFormatIsValid('1990', '12', '32')).not.toBeTruthy()
+  })
+}
+
+const checkDateStringIsValidTest = () => {
+  test('check is 2019/01/01 is valid', () => {
+    expect(checkDateStringIsValid('2019/01/01')).toBeTruthy()
+  })
+  test('check is 2019/02/29 is valid', () => {
+    expect(checkDateStringIsValid('2019/02/29')).not.toBeTruthy()
+  })
+  test('check is 2019/31/29 is valid', () => {
+    expect(checkDateStringIsValid('2019/13/01')).not.toBeTruthy()
+  })
+  test('check is 2019-01-01 is valid', () => {
+    expect(checkDateStringIsValid('2019-01-01')).toBeTruthy()
+  })
+  test('check is 20190101 is valid', () => {
+    expect(checkDateStringIsValid('20190101')).toBeTruthy()
+  })
+  test('check is 2019~01~01 is valid', () => {
+    expect(checkDateStringIsValid('2019~01~01')).not.toBeTruthy()
+  })
+  test('check is 二零一九 is valid', () => {
+    expect(checkDateStringIsValid('二零一九')).not.toBeTruthy()
+  })
+  test('check is 2019 is valid', () => {
+    expect(checkDateStringIsValid('2019')).not.toBeTruthy()
+  })
+  test('check is 20/01/2019 is valid', () => {
+    expect(checkDateStringIsValid('20/01/2019')).not.toBeTruthy()
+  })
+  test('check is number 20190101 is valid', () => {
+    expect(() => { checkDateStringIsValid(20190101) }).toThrow(Error)
   })
 }

@@ -7,7 +7,7 @@ const { inRange, isEleInArray } = commonFunc
 //   return ''
 // }
 
-// const checkStringIsValid = (date = '') => {
+// const checkDateRangeIsValid = (date = '') => {
 //   // check if format is YYYYMMDD / YYYY-MM-DD / YYYY/MM/DD
 //   const regEx = /[^0-9-/]/g
 //   if (date.match(regEx)) return false
@@ -21,31 +21,45 @@ const { inRange, isEleInArray } = commonFunc
 //   }
 // }
 
-// const checkStringCanBeSplitedBySymbol = (symbol = '', s = '') => {
-//   let isValid = true
-//   switch (symbol) {
-//     case '/': {
-//       if(s.includes(symbol)){
-//         isValid =
-//         const dateArray = s.split(symbol) // expected ['YYYY','MM','DD']
-//         const validDate = dateArray[0].length
-//       }
-//       break
-//     }
-//     case '-': {
-//       isValid = s.split(symbol).length === 3
-//       break
-//     }
-//     case 'null': {
-//       isValid = s.length === 8
-//       break
-//     }
-//     default: {
-//       isValid = true
-//     }
-//   }
-//   return isValid
-// }
+/**
+ * check if date string is a valid string, valid string format can be
+ * YYYY-MM-DD YYYYMMDD YYYY/MM/DD
+ * @param {string} s
+ * @return {boolean}
+ */
+const checkDateStringIsValid = (s = '') => {
+  if (!isString(s)) throw new Error('input not valid')
+  const regEx = {
+    withoutOutlier: /[^0-9/-]/g,
+    withDash: /[[-]/g,
+    withSlash: /[/]/g
+  }
+  if (s.match(regEx.withoutOutlier) !== null) return false
+  const numOfDash = s.match(regEx.withDash) ? s.match(regEx.withDash).length : 0
+  const numOfSlash = s.match(regEx.withSlash) ? s.match(regEx.withSlash).length : 0
+  if ((numOfDash === 2 && numOfDash + numOfSlash === 2) ||
+  (numOfSlash === 2 && numOfSlash + numOfDash === 2) ||
+  (numOfSlash + numOfDash === 0 && s.length === 8)) {
+    const symbol = s.includes('/') ? '/' : s.includes('-') ? '-' : null
+    switch (symbol) {
+      case '/':
+      case '-': {
+        const arr = s.split(symbol)
+        const isValid = checkYearMonthDayFormatIsValid(arr[0], arr[1], arr[2]) && arr.length === 3
+        return isValid
+      }
+      case null: {
+        const year = s.slice(0, 4)
+        const month = s.slice(4, 6)
+        const day = s.slice(6, 8)
+        const isValid = checkYearMonthDayFormatIsValid(year, month, day)
+        return isValid
+      }
+    }
+  } else {
+    return false
+  }
+}
 
 /**
  * check if year, month, day value is valid
@@ -85,7 +99,8 @@ const isLeapYear = (year = '') => {
 
 const dateTool = {
   checkYearMonthDayFormatIsValid,
-  isLeapYear
+  isLeapYear,
+  checkDateStringIsValid
 }
 
 module.exports = dateTool

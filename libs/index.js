@@ -42,6 +42,14 @@ const isEleInArray = (arr = [], ele) => {
   return result
 }
 
+/**
+ * move the element in an array forward or backward based on shift number (positive or negative)
+ * if the next or previous index exceeds the array, then the next index will start from the first or from the end
+ * for example, [0,1,2] move forward 1, will be [2,1,0]
+ * @param {Array} arr
+ * @param {numnber} shift
+ * @return Array
+ */
 const circleShift = (arr = [], shift = 0) => {
   const { isNumber } = typeCheck
   const total = arr.length
