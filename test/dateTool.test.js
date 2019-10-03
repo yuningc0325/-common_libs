@@ -2,13 +2,15 @@ const dateTool = require('../dateTool')
 const {
   isLeapYear,
   checkYearMonthDayFormatIsValid,
-  checkDateStringIsValid
+  checkDateStringIsValid,
+  checkDateRangeStringIsValid
 } = dateTool
 
 module.exports = () => {
   isLeapYearTest()
   checkYearMonthDayFormatIsValidTest()
   checkDateStringIsValidTest()
+  checkDateRangeStringIsValidTest()
 }
 
 const isLeapYearTest = () => {
@@ -51,34 +53,49 @@ const checkYearMonthDayFormatIsValidTest = () => {
 }
 
 const checkDateStringIsValidTest = () => {
-  test('check is 2019/01/01 is valid', () => {
+  test('check if 2019/01/01 is valid', () => {
     expect(checkDateStringIsValid('2019/01/01')).toBeTruthy()
   })
-  test('check is 2019/02/29 is valid', () => {
+  test('check if 2019/02/29 is valid', () => {
     expect(checkDateStringIsValid('2019/02/29')).not.toBeTruthy()
   })
-  test('check is 2019/31/29 is valid', () => {
+  test('check if 2019/31/29 is valid', () => {
     expect(checkDateStringIsValid('2019/13/01')).not.toBeTruthy()
   })
-  test('check is 2019-01-01 is valid', () => {
+  test('check if 2019-01-01 is valid', () => {
     expect(checkDateStringIsValid('2019-01-01')).toBeTruthy()
   })
-  test('check is 20190101 is valid', () => {
+  test('check if 20190101 is valid', () => {
     expect(checkDateStringIsValid('20190101')).toBeTruthy()
   })
-  test('check is 2019~01~01 is valid', () => {
+  test('check if 2019~01~01 is valid', () => {
     expect(checkDateStringIsValid('2019~01~01')).not.toBeTruthy()
   })
-  test('check is 二零一九 is valid', () => {
+  test('check if 二零一九 is valid', () => {
     expect(checkDateStringIsValid('二零一九')).not.toBeTruthy()
   })
-  test('check is 2019 is valid', () => {
+  test('check if 2019 is valid', () => {
     expect(checkDateStringIsValid('2019')).not.toBeTruthy()
   })
-  test('check is 20/01/2019 is valid', () => {
+  test('check if 20/01/2019 is valid', () => {
     expect(checkDateStringIsValid('20/01/2019')).not.toBeTruthy()
   })
-  test('check is number 20190101 is valid', () => {
+  test('check if number 20190101 is valid', () => {
     expect(() => { checkDateStringIsValid(20190101) }).toThrow(Error)
+  })
+}
+
+const checkDateRangeStringIsValidTest = () => {
+  test('check if 2019/01/01~2019/01/02 is valid', () => {
+    expect(checkDateRangeStringIsValid('2019/01/01~2019/01/02')).toBeTruthy()
+  })
+  test('check if 2019/01/01-2019/01/02 is valid', () => {
+    expect(checkDateRangeStringIsValid('2019/01/01-2019/01/02')).not.toBeTruthy()
+  })
+  test('check if 2019/01/01~2019/01/02~2019/02/01 is valid', () => {
+    expect(checkDateRangeStringIsValid('2019/01/01-2019/01/02~2019/02/01')).not.toBeTruthy()
+  })
+  test('check if 12345678~12345678 is valid', () => {
+    expect(checkDateRangeStringIsValid('12345678~12345678')).not.toBeTruthy()
   })
 }

@@ -2,24 +2,19 @@ const typeCheck = require('./typeCheck')
 const commonFunc = require('./libs/index')
 const { isNumber, isString } = typeCheck
 const { inRange, isEleInArray } = commonFunc
-// 2019/02/02 ,2019-02-02 , 20190201 - > timestamp
-// const stringToTimeStamp = (s = '') => {
-//   return ''
-// }
 
-// const checkDateRangeIsValid = (date = '') => {
-//   // check if format is YYYYMMDD / YYYY-MM-DD / YYYY/MM/DD
-//   const regEx = /[^0-9-/]/g
-//   if (date.match(regEx)) return false
-//   const splitString = date.split(regEx) // expected: ['YYYY/MM/DD'] || ['YYYY-MM-DD'] || ['YYYdYMMDD']
-//   let splitYear
-//   let splitMonth
-//   let splitDay
-//   if (splitString.length===1) {
-//     const date = splitString[0]
-//     cosnt isValod = checkStringCanBeSplitedBySymbol('/',date) && checkStringCanBeSplitedBySymbol('-',date) && checkStringCanBeSplitedBySymbol('null',date)
-//   }
-// }
+/**
+ * check if date range string is a valid string, valid string format can be
+ * YYYY-MM-DD~YYYY-MM-DD, YYYY/MM/DD~YYYY/MM/DD, YYYYMMDD~YYYYMMDD
+ * @param {String} date
+ * @return {boolean}
+ */
+const checkDateRangeStringIsValid = (date = '') => {
+  if (!isString(date)) throw new Error('input not valid')
+  const arr = date.split('~')
+  if (arr.length !== 2) return false
+  return checkDateStringIsValid(arr[0]) && checkDateStringIsValid(arr[1])
+}
 
 /**
  * check if date string is a valid string, valid string format can be
@@ -100,7 +95,8 @@ const isLeapYear = (year = '') => {
 const dateTool = {
   checkYearMonthDayFormatIsValid,
   isLeapYear,
-  checkDateStringIsValid
+  checkDateStringIsValid,
+  checkDateRangeStringIsValid
 }
 
 module.exports = dateTool
