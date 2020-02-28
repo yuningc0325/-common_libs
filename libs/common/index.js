@@ -1,4 +1,4 @@
-const typeCheck = require('../typeCheck')
+const typeCheck = require('../checkType/typeCheck')
 /**
  * check the number is in range between (inclusive) statr and (inclusive) end
  * @param {number} number

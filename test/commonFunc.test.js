@@ -1,4 +1,4 @@
-const { inRange, isEleInArray, circleShift } = require('../libs/index')
+const { inRange, isEleInArray, circleShift } = require('../libs/common/index')
 
 module.exports = () => {
   inRangeTest()

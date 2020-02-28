@@ -1,4 +1,4 @@
-const dateTool = require('../dateTool')
+const dateTool = require('../libs/date/dateTool')
 const {
   isLeapYear,
   checkYearMonthDayFormatIsValid,
