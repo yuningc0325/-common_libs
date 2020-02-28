@@ -30,7 +30,7 @@ const isObjectNotEmpty = (object) => {
   return isValid
 }
 
-const TypeCheck = {
+const typeCheck = {
   isNumber,
   isString,
   isDate,
@@ -39,4 +39,4 @@ const TypeCheck = {
   isObjectNotEmpty
 }
 
-module.exports = TypeCheck
+module.exports = typeCheck

@@ -1,4 +1,4 @@
-const typeCheck = require('../libs/checkType/typeCheck')
+const typeCheck = require('../libs/checkType')
 
 module.exports = () => {
   test('check if 10 is a number', () => {

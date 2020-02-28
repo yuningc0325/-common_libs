@@ -1,5 +1,5 @@
-const typeCheck = require('../checkType/typeCheck')
-const commonFunc = require('../common/index')
+const typeCheck = require('../checkType')
+const commonFunc = require('../common')
 const { isNumber, isString } = typeCheck
 const { inRange, isEleInArray } = commonFunc
 
